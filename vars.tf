@@ -1,11 +1,25 @@
-variable "vpc_cidr" {
-  description = "Choose vpc cidr block"
+variable "region" {
+  default     = "ap-south-1"
+  description = "Choose region for your vpc"
   type        = string
-  default     = "172.21.0.0/16"
 }
-variable "subnet_cidrs" {
-  type    = list(string)
-  default = ["172.21.0.0/24", "172.21.1.0/24", "172.21.2.0/24"]
+variable "vpc_cidr" {
+  default     = "10.0.0.0/16"
+  description = "Choose cidr for your vpc"
+  type        = string
 }
 
-# In real time one subnet per availability_zone
+variable "vpc_tenancy" {
+  default     = "default"
+  description = "Choose tenancy for your vpc"
+  type        = string
+}
+
+variable "nat_amis" {
+  description = "Choose NAT ami"
+  type        = map
+  default = {
+    ap-south-1     = "ami-00b3aa8a93dd09c13"
+    ap-southeast-2 = "ami-00c1445796bc0a29f"
+  }
+}
