@@ -71,11 +71,17 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.main.id
 
   route {
-    cidr_block = "0.0.0.0/0"
+    cidr_block  = "0.0.0.0/0"
     instance_id = aws_instance.nat.id
   }
 
   tags = {
     Name = "private-${terraform.workspace}"
   }
+}
+
+resource "aws_route_table_association" "b" {
+  count          = local.pub_sub_length
+  subnet_id      = local.pri_sub_ids[count.index]
+  route_table_id = aws_route_table.private.id
 }
